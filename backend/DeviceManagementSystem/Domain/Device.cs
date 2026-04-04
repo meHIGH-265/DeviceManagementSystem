@@ -1,9 +1,7 @@
 ﻿namespace DeviceManagementSystem.Domain
 {
-    public class Device
+    public class Device : Entity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; } = null!;
 
         public string Manufacturer { get; set; } = null!;

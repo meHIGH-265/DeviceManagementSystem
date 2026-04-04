@@ -1,4 +1,6 @@
 
+using DeviceManagementSystem.Repository;
+
 namespace DeviceManagementSystem
 {
     public class Program
@@ -12,6 +14,10 @@ namespace DeviceManagementSystem
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            // Register repositories for dependency injection
+            builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             var app = builder.Build();
 

@@ -1,9 +1,7 @@
 ﻿namespace DeviceManagementSystem.Domain
 {
-    public class User
+    public class User : Entity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; } = null!;
 
         public string Role { get; set; } = null!;
