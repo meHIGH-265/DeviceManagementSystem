@@ -1,4 +1,5 @@
 -- Delete database
+/*
 USE master;
 GO
 IF EXISTS (SELECT * FROM sys.databases WHERE name = 'DeviceManagementDB')
@@ -6,6 +7,7 @@ BEGIN
     DROP DATABASE DeviceManagementDB;
 END
 GO
+*/
 
 -- The following checks for existance of database and tables are redundant since I deleted it previously,
 -- but I am not yet sure of the best practice to make this script idempotent,
@@ -21,6 +23,20 @@ GO
 -- Use database
 USE DeviceManagementDB;
 GO
+
+/*
+-- Create test database if it doesn't exist
+-- The test database will be used for tests only so that the main database isn't affected during testing
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DeviceManagementDB_Test')
+BEGIN
+    CREATE DATABASE DeviceManagementDB_Test;
+END
+GO
+
+-- Use database
+USE DeviceManagementDB_Test;
+GO
+*/
 
 -- USERS TABLE
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Users')

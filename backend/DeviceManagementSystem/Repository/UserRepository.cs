@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace DeviceManagementSystem.Repository
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<User, int>
     {
-        // Additional user-specific methods can be added here
+        Task<User?> GetByEmailAsync(string email);
     }
 
     public class UserRepository : IUserRepository
@@ -141,6 +141,34 @@ namespace DeviceManagementSystem.Repository
 
             var rows = await command.ExecuteNonQueryAsync();
             return rows > 0;
+        }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var query = "SELECT * FROM Users WHERE Email = @Email";
+
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email", email);
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                return new User
+                {
+                    Id = (int)reader["Id"],
+                    Name = reader["Name"].ToString()!,
+                    Role = reader["Role"].ToString()!,
+                    Location = reader["Location"].ToString()!,
+                    Email = reader["Email"].ToString()!,
+                    PasswordHash = reader["PasswordHash"].ToString()!
+                };
+            }
+
+            return null;
         }
     }
 }

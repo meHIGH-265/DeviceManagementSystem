@@ -1,6 +1,8 @@
-﻿namespace DeviceManagementSystem.Domain
+﻿using System.Runtime.InteropServices.Marshalling;
+
+namespace DeviceManagementSystem.Domain
 {
-    public class User : Entity
+    public class User : Entity<int>
     {
         public string Name { get; set; } = null!;
 

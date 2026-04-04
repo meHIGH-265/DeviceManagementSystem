@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DeviceManagementSystem.Repository
 {
-    public interface IDeviceRepository : IRepository<Device>
+    public interface IDeviceRepository : IRepository<Device, int>
     {
         Task<IEnumerable<Device>> GetByUserIdAsync(int userId);
     }
@@ -34,40 +34,6 @@ namespace DeviceManagementSystem.Repository
             var query = "SELECT * FROM Devices";
 
             using var command = new SqlCommand(query, connection);
-            using var reader = await command.ExecuteReaderAsync();
-
-            while (await reader.ReadAsync())
-            {
-                devices.Add(new Device
-                {
-                    Id = (int)reader["Id"],
-                    Name = reader["Name"].ToString()!,
-                    Manufacturer = reader["Manufacturer"].ToString()!,
-                    Type = reader["Type"].ToString()!,
-                    OS = reader["OS"].ToString()!,
-                    OSVersion = reader["OSVersion"]?.ToString(),
-                    Processor = reader["Processor"]?.ToString(),
-                    RAM = reader["RAM"]?.ToString(),
-                    Description = reader["Description"]?.ToString(),
-                    AssignedUserId = reader["AssignedUserId"] as int?
-                });
-            }
-
-            return devices;
-        }
-
-        public async Task<IEnumerable<Device>> GetByUserIdAsync(int userId)
-        {
-            var devices = new List<Device>();
-
-            using var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
-
-            var query = "SELECT * FROM Devices WHERE AssignedUserId = @UserId";
-
-            using var command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@UserId", userId);
-
             using var reader = await command.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
@@ -197,6 +163,40 @@ namespace DeviceManagementSystem.Repository
 
             var rows = await command.ExecuteNonQueryAsync();
             return rows > 0;
+        }
+
+        public async Task<IEnumerable<Device>> GetByUserIdAsync(int userId)
+        {
+            var devices = new List<Device>();
+
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var query = "SELECT * FROM Devices WHERE AssignedUserId = @UserId";
+
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserId", userId);
+
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                devices.Add(new Device
+                {
+                    Id = (int)reader["Id"],
+                    Name = reader["Name"].ToString()!,
+                    Manufacturer = reader["Manufacturer"].ToString()!,
+                    Type = reader["Type"].ToString()!,
+                    OS = reader["OS"].ToString()!,
+                    OSVersion = reader["OSVersion"]?.ToString(),
+                    Processor = reader["Processor"]?.ToString(),
+                    RAM = reader["RAM"]?.ToString(),
+                    Description = reader["Description"]?.ToString(),
+                    AssignedUserId = reader["AssignedUserId"] as int?
+                });
+            }
+
+            return devices;
         }
     }
 }
