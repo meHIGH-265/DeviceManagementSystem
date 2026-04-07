@@ -59,6 +59,43 @@ export class DeviceFormComponent {
     }
   }
 
+  canGenerateAi(): boolean {
+    if (this.mode === 'view') return false;
+
+    const requiredFields = [
+      'name',
+      'manufacturer',
+      'type',
+      'os',
+      'osVersion',
+      'processor',
+      'ram'
+    ];
+
+    return requiredFields.every(field => this.form.get(field)?.valid);
+  }
+
+  generateAiDescription() {
+    if (this.form.get('description') == null) {
+      this.form.patchValue({
+        description: 'generating ai description...'
+      });
+    }
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const device = this.form.getRawValue();
+
+    this.deviceService.generateDescription(device).subscribe(res => {
+      this.form.patchValue({
+        description: res.description
+      });
+    });
+  }
+
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -96,8 +133,8 @@ export class DeviceFormComponent {
 
     if (this.mode === 'edit') {
       const updatedDevice: Device = {
-        ...this.edited_device,   // 👈 KEEP existing values (including userId)
-        ...device                // 👈 overwrite only edited fields
+        ...this.edited_device,
+        ...device
       };
 
       this.deviceService.update(updatedDevice).subscribe(() => {

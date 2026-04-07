@@ -25,6 +25,7 @@ namespace DeviceManagementSystem
             builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+            // CORS configuration to allow Angular frontend
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngular",
@@ -63,6 +64,10 @@ namespace DeviceManagementSystem
 
             builder.Services.AddAuthorization();
 
+            // Registe AI service
+            builder.Services.AddScoped<AiService>();
+
+            // Build the app
             var app = builder.Build();
 
             app.UseCors("AllowAngular");

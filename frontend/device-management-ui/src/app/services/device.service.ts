@@ -20,7 +20,6 @@ export class DeviceService {
   }
 
   create(device: Device) {
-    console.info(device)
     return this.http.post(this.apiUrl, device);
   }
 
@@ -30,5 +29,9 @@ export class DeviceService {
 
   delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  generateDescription(device: any) {
+    return this.http.post<{ description: string }>(`${this.apiUrl}/generate-description`, device);
   }
 }

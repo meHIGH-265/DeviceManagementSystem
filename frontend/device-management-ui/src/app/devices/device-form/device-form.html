@@ -60,6 +60,15 @@
 
   <mat-form-field appearance="fill">
     <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    <button
+      mat-button
+      matSuffix
+      type="button"
+      (click)="generateAiDescription()"
+      [disabled]="!canGenerateAi()"
+    >
+      Generate AI
+    </button>
     <mat-error *ngIf="form.controls.description.invalid && form.controls.description.touched">
       Description is required
     </mat-error>

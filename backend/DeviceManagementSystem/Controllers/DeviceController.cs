@@ -1,5 +1,6 @@
 ﻿using DeviceManagementSystem.Domain;
 using DeviceManagementSystem.Repository;
+using DeviceManagementSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -80,6 +81,21 @@ namespace DeviceManagementSystem.Controllers
         {
             var devices = await _deviceRepository.GetByUserIdAsync(userId);
             return Ok(devices);
+        }
+
+        [Authorize]
+        [HttpPost("generate-description")]
+        [ActionName("GenerateDescription")]
+        public async Task<IActionResult> GenerateDescription([FromBody] Device device, [FromServices] AiService aiService)
+        {
+            if (device == null)
+            {
+                return BadRequest();
+            }
+
+            var description = await aiService.GenerateDeviceDescription(device);
+
+            return Ok(new { description });
         }
     }
 }
