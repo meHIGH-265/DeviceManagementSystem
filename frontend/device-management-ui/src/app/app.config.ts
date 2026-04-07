@@ -3,8 +3,8 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 
-import { provideHttpClient } from '@angular/common/http';
-// import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 // Angular Material modules
 import { importProvidersFrom } from '@angular/core';
@@ -20,7 +20,15 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(),
-    // provideAnimations(),
+
+    provideHttpClient(withInterceptorsFromDi()),
+
+    // 👇 Register your interceptor globally
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
 
     importProvidersFrom(
       MatDialogModule,

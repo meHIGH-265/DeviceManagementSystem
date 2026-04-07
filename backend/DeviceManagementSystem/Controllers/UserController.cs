@@ -1,5 +1,7 @@
 ﻿using DeviceManagementSystem.Domain;
 using DeviceManagementSystem.Repository;
+using DeviceManagementSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeviceManagementSystem.Controllers
@@ -15,6 +17,7 @@ namespace DeviceManagementSystem.Controllers
             _userRepository = userRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -22,6 +25,7 @@ namespace DeviceManagementSystem.Controllers
             return Ok(users);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -42,6 +46,7 @@ namespace DeviceManagementSystem.Controllers
             return CreatedAtAction(nameof(GetById), new { id }, user);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, User user)
         {
@@ -56,6 +61,7 @@ namespace DeviceManagementSystem.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -67,15 +73,24 @@ namespace DeviceManagementSystem.Controllers
             return NoContent();
         }
 
-        [HttpPost("match_user_pass")]
-        public async Task<IActionResult> MatchUserPass(LoginRequest request)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginRequest request, [FromServices] JwtService jwtService)
         {
-            var user = await _userRepository.GetByEmailAsync(request.Email, request.PasswordHash);
+            var user = await _userRepository.GetByEmailAsync(
+                request.Email,
+                request.PasswordHash
+            );
 
             if (user == null)
-                return NotFound();
+                return Unauthorized();
 
-            return Ok(user);
+            var token = jwtService.GenerateToken(user);
+
+            return Ok(new
+            {
+                token = token,
+                user = user
+            });
         }
     }
 }

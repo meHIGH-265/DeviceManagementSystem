@@ -7,6 +7,7 @@ import { DeviceService } from '../../services/device.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { Device } from '../../models/device.model';
 
 @Component({
   selector: 'app-device-form',
@@ -26,6 +27,7 @@ export class DeviceFormComponent {
   mode: 'view' | 'edit' | 'create' | 'create_unique';
 
   form;
+  edited_device: Device | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -49,6 +51,7 @@ export class DeviceFormComponent {
 
     if (data.device) {
       this.form.patchValue(data.device);
+      this.edited_device = data.device;
     }
 
     if (this.mode === 'view') {
@@ -92,7 +95,12 @@ export class DeviceFormComponent {
     }
 
     if (this.mode === 'edit') {
-      this.deviceService.update(device).subscribe(() => {
+      const updatedDevice: Device = {
+        ...this.edited_device,   // 👈 KEEP existing values (including userId)
+        ...device                // 👈 overwrite only edited fields
+      };
+
+      this.deviceService.update(updatedDevice).subscribe(() => {
         this.dialogRef.close(true);
       });
     }

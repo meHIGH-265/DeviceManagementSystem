@@ -1,5 +1,6 @@
 ﻿using DeviceManagementSystem.Domain;
 using DeviceManagementSystem.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeviceManagementSystem.Controllers
@@ -15,6 +16,7 @@ namespace DeviceManagementSystem.Controllers
             _deviceRepository = deviceRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -22,6 +24,7 @@ namespace DeviceManagementSystem.Controllers
             return Ok(devices);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -33,6 +36,7 @@ namespace DeviceManagementSystem.Controllers
             return Ok(device);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Device device)
         {
@@ -42,6 +46,7 @@ namespace DeviceManagementSystem.Controllers
             return CreatedAtAction(nameof(GetById), new { id }, device);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Device device)
         {
@@ -56,6 +61,7 @@ namespace DeviceManagementSystem.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -68,6 +74,7 @@ namespace DeviceManagementSystem.Controllers
         }
 
         // BONUS: Get devices by user
+        [Authorize]
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetByUser(int userId)
         {

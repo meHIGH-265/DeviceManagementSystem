@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
+import { AuthResponse } from '../models/auth-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -10,11 +11,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/match_user_pass`, {
+  login(email: string, password: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, {
       email: email,
       passwordHash: password
     });
+  }
+
+  setSession(authResult: AuthResponse) {
+    localStorage.setItem('token', authResult.token);
+    localStorage.setItem('user', JSON.stringify(authResult.user));
   }
 
   register(user: any) {
@@ -31,7 +37,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('user');
+    return !!localStorage.getItem('token');
   }
 
   logout() {

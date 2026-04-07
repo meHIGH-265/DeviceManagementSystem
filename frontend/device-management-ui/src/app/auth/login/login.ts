@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthResponse } from '../../models/auth-response.model';
 
 @Component({
   selector: 'app-login',
@@ -45,8 +46,8 @@ export class LoginComponent {
     const { email, password } = this.form.getRawValue();
 
     this.auth.login(email, password).subscribe({
-      next: (user) => {
-        this.auth.setUser(user);
+      next: (res: AuthResponse) => {
+        this.auth.setSession(res);
         this.router.navigate(['/devices']);
       },
       error: () => {
