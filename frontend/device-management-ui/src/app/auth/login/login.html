@@ -1,0 +1,25 @@
+<h2>Login</h2>
+
+<form [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <input matInput placeholder="Email" formControlName="email">
+    <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
+      Email is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <input matInput type="password" placeholder="Password" formControlName="password">
+    <mat-error *ngIf="form.controls.password.invalid && form.controls.password.touched">
+      Password is required
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="login()">Login</button>
+
+  <p>
+    <a routerLink="/register" style="color: blue; text-decoration: underline;">
+      Don't have an account? Sign-up
+    </a>
+  </p>
+</form>

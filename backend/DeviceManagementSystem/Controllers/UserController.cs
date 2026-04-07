@@ -66,5 +66,16 @@ namespace DeviceManagementSystem.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("match_user_pass")]
+        public async Task<IActionResult> MatchUserPass(LoginRequest request)
+        {
+            var user = await _userRepository.GetByEmailAsync(request.Email, request.PasswordHash);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
     }
 }

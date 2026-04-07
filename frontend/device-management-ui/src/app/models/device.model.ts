@@ -8,8 +8,5 @@ export interface Device {
   processor?: string;
   ram?: string;
   description?: string;
-  assignedUserId?: number;
-  assignedUser?: {
-    name: string;
-  };
+  assignedUserId?: number | null;
 }

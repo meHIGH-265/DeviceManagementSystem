@@ -2,9 +2,9 @@
 
 namespace DeviceManagementSystem.Domain
 {
-    public class User// : Entity<int>
+    public class User
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; } = null!;
 
         public string Role { get; set; } = null!;
@@ -13,6 +13,6 @@ namespace DeviceManagementSystem.Domain
 
         public string Email { get; set; } = null!;
 
-        public string PasswordHash { get; set; } = null!;
+        public string? PasswordHash { get; set; }
     }
 }

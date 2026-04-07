@@ -7,7 +7,7 @@ namespace DeviceManagementSystem.Repository
 {
     public interface IUserRepository : IRepository<User, int>
     {
-        Task<User?> GetByEmailAsync(string email);
+        Task<User?> GetByEmailAsync(string email, string? passwordHash);
     }
 
     public class UserRepository : IUserRepository
@@ -45,7 +45,7 @@ namespace DeviceManagementSystem.Repository
                     Role = reader["Role"].ToString()!,
                     Location = reader["Location"].ToString()!,
                     Email = reader["Email"].ToString()!,
-                    PasswordHash = reader["PasswordHash"].ToString()!
+                    PasswordHash = null// reader["PasswordHash"].ToString()!
                 });
             }
 
@@ -73,7 +73,7 @@ namespace DeviceManagementSystem.Repository
                     Role = reader["Role"].ToString()!,
                     Location = reader["Location"].ToString()!,
                     Email = reader["Email"].ToString()!,
-                    PasswordHash = reader["PasswordHash"].ToString()!
+                    PasswordHash = null// reader["PasswordHash"].ToString()!
                 };
             }
 
@@ -143,15 +143,20 @@ namespace DeviceManagementSystem.Repository
             return rows > 0;
         }
 
-        public async Task<User?> GetByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(string email, string? passwordHash)
         {
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            var query = "SELECT * FROM Users WHERE Email = @Email";
+            string passwordCheckClause = passwordHash != null ? " AND PasswordHash = @PasswordHash" : string.Empty;
+            var query = $"SELECT * FROM Users WHERE Email = @Email{passwordCheckClause}";
 
             using var command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Email", email);
+            if (passwordHash != null )
+            {
+                command.Parameters.AddWithValue("@PasswordHash", passwordHash);
+            }
 
             using var reader = await command.ExecuteReaderAsync();
 
@@ -164,7 +169,7 @@ namespace DeviceManagementSystem.Repository
                     Role = reader["Role"].ToString()!,
                     Location = reader["Location"].ToString()!,
                     Email = reader["Email"].ToString()!,
-                    PasswordHash = reader["PasswordHash"].ToString()!
+                    PasswordHash = null// reader["PasswordHash"].ToString()!
                 };
             }
 
