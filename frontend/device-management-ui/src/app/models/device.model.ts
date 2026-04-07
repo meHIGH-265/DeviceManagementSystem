@@ -1,5 +1,5 @@
 export interface Device {
-  id: number;
+  id?: number;
   name: string;
   manufacturer: string;
   type: string;
@@ -9,4 +9,7 @@ export interface Device {
   ram?: string;
   description?: string;
   assignedUserId?: number;
+  assignedUser?: {
+    name: string;
+  };
 }

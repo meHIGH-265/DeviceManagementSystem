@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Device } from '../models/device.model';
 import { Observable } from 'rxjs';
-import { Device } from '../models/device';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
-
   private apiUrl = 'https://localhost:7144/api/device';
 
   constructor(private http: HttpClient) {}
@@ -20,15 +19,16 @@ export class DeviceService {
     return this.http.get<Device>(`${this.apiUrl}/${id}`);
   }
 
-  create(device: Device): Observable<Device> {
-    return this.http.post<Device>(this.apiUrl, device);
+  create(device: Device) {
+    console.info(device)
+    return this.http.post(this.apiUrl, device);
   }
 
-  update(device: Device): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${device.id}`, device);
+  update(device: Device) {
+    return this.http.put(`${this.apiUrl}/${device.id}`, device);
   }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  delete(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
