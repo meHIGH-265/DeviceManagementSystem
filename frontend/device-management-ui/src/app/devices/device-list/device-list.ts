@@ -1,18 +1,21 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 import { DeviceService } from '../../services/device.service';
 import { Device } from '../../models/device.model';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { UserDialogComponent } from '../../user/user-dialog/user-dialog';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DeviceFormComponent } from '../device-form/device-form';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog';
 import { AuthService } from '../../services/auth.service';
-
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-device-list',
@@ -22,7 +25,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './device-list.html'
 })
@@ -32,6 +38,7 @@ export class DeviceListComponent implements OnInit {
   userMap: { [key: number]: User } = {};
   displayedColumns = ['name', 'manufacturer', 'user', 'actions'];
   currentUser: User | null;
+  searchQuery: string = '';
 
   constructor(
     private deviceService: DeviceService,
@@ -48,11 +55,26 @@ export class DeviceListComponent implements OnInit {
     this.loadUsers();
   }
 
+  onSearchChange() {
+    this.loadDevices();
+  }
+
   loadDevices() {
-    this.deviceService.getAll().subscribe(data => {
-      this.devices = data;
-      this.cdr.detectChanges();
-    });
+    if (!this.searchQuery || this.searchQuery.trim() === '') {
+      this.deviceService.getAll().subscribe(data => {
+        this.devices = data;
+        this.cdr.detectChanges();
+      });
+    } else {
+      this.deviceService.search(this.searchQuery).subscribe(results => {
+
+        this.devices = results
+          .filter(r => r.score > 0)
+          .map(r => r.device);
+
+        this.cdr.detectChanges();
+      });
+    }
   }
 
   loadUsers() {

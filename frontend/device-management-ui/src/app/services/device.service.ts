@@ -34,4 +34,10 @@ export class DeviceService {
   generateDescription(device: any) {
     return this.http.post<{ description: string }>(`${this.apiUrl}/generate-description`, device);
   }
+
+  search(query: string): Observable<{ device: Device; score: number }[]> {
+    return this.http.get<{ device: Device; score: number }[]>(
+      `${this.apiUrl}/search/${encodeURIComponent(query)}`
+    );
+  }
 }
