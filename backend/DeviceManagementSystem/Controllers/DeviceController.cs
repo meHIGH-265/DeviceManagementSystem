@@ -97,5 +97,24 @@ namespace DeviceManagementSystem.Controllers
 
             return Ok(new { description });
         }
+
+        [Authorize]
+        [HttpGet("search/{query}")]
+        public async Task<IActionResult> RankDevicesByMatch(string query, [FromServices] DeviceSearchService deviceSearchService)
+        {
+            var devices = await _deviceRepository.GetAllAsync();
+
+            var orderedDevices = devices
+                .Select(d => new
+                {
+                    Device = d,
+                    Score = deviceSearchService.CalculateScore(d, query)
+                })
+                .OrderByDescending(x => x.Score)
+                // .Select(x => x.Device)
+                .ToList();
+
+            return Ok(orderedDevices);
+        }
     }
 }

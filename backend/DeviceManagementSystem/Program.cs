@@ -67,6 +67,9 @@ namespace DeviceManagementSystem
             // Registe AI service
             builder.Services.AddScoped<AiService>();
 
+            // Register device search service
+            builder.Services.AddScoped<DeviceSearchService>();
+
             // Build the app
             var app = builder.Build();
 

@@ -22,7 +22,7 @@ namespace DeviceManagementSystem.Services
 Create a human-readable, concise, and informative description of a device based on its technical specifications.
 
 Example:
-Input: Name – iPhone 17 Pro, Manufacturer – Apple, OS – iOS, Type – phone, RAM – 12GB, Processor– A19 Pro
+Input: Name – iPhone 17 Pro, Manufacturer – Apple, OS – iOS, Type – phone, RAM – 12GB, Processor – A19 Pro
 Output: 'A high-performance Apple smartphone running iOS, suitable for daily business use.'
 
 Focus on generating clear, relevant, and user-friendly descriptions that enhance the device information.
