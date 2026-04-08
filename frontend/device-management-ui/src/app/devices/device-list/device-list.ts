@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Router, RouterModule } from '@angular/router';
 
 import { DeviceService } from '../../services/device.service';
 import { Device } from '../../models/device.model';
@@ -28,6 +29,7 @@ import { AuthService } from '../../services/auth.service';
     MatDialogModule,
     FormsModule,
     MatFormFieldModule,
+    RouterModule,
     MatInputModule
   ],
   templateUrl: './device-list.html'
@@ -45,7 +47,8 @@ export class DeviceListComponent implements OnInit {
     private userService: UserService,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
     this.currentUser = this.auth.getUser();
   }
@@ -186,5 +189,10 @@ export class DeviceListComponent implements OnInit {
         this.openUserViewDialog(user);
       }
     }
+  }
+
+  logout() {
+    this.router.navigate(['']);
+    this.auth.setSession({token: '', user: {id: 0, name: '', email: '', role: '', location: ''}});
   }
 }

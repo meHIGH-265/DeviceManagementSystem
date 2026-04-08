@@ -12,6 +12,10 @@
   Add Device
 </button>
 
+<button mat-raised-button color="primary" (click)="logout()">
+  LogOut
+</button>
+
 <table mat-table [dataSource]="devices">
 
   <ng-container matColumnDef="name">
