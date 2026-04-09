@@ -1,57 +1,94 @@
-<h2>Register</h2>
+<div class="auth-container">
+  <div class="auth-card">
+    <h2 class="auth-title">Register</h2>
 
-<form [formGroup]="form">
+    <form [formGroup]="form" class="auth-form">
 
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="Name" formControlName="name">
-    <mat-error *ngIf="form.controls.name.invalid && form.controls.name.touched">
-      Name is required
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <input matInput placeholder="Name" formControlName="name" />
+        <mat-error *ngIf="form.controls.name.invalid && form.controls.name.touched">
+          Name is required
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="Email" formControlName="email">
-    <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
-      Email is required
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <input matInput placeholder="Email" formControlName="email" />
+        <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
+          Email is required
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="Role" formControlName="role">
-    <mat-error *ngIf="form.controls.role.invalid && form.controls.role.touched">
-      Role is required
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <input matInput placeholder="Role" formControlName="role" />
+        <mat-error *ngIf="form.controls.role.invalid && form.controls.role.touched">
+          Role is required
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="Location" formControlName="location">
-    <mat-error *ngIf="form.controls.location.invalid && form.controls.location.touched">
-      Location is required
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <input matInput placeholder="Location" formControlName="location" />
+        <mat-error *ngIf="form.controls.location.invalid && form.controls.location.touched">
+          Location is required
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <input matInput type="password" placeholder="Password" formControlName="password">
-    <mat-error *ngIf="form.controls.password.invalid && form.controls.password.touched">
-      Password is required
-    </mat-error>
-  </mat-form-field>
+      <!-- Password -->
+      <mat-form-field appearance="fill" class="full-width">
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.controls.password.invalid && form.controls.password.touched">
+          Password is required
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
-    <mat-error *ngIf="form.controls.confirmPassword.invalid && form.controls.confirmPassword.touched">
-      Confirm password is required
-    </mat-error>
-  </mat-form-field>
+      <!-- Confirm Password -->
+      <mat-form-field appearance="fill" class="full-width">
+        <input
+          matInput
+          [type]="hideConfirmPassword ? 'password' : 'text'"
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hideConfirmPassword = !hideConfirmPassword"
+        >
+          <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.controls.confirmPassword.invalid && form.controls.confirmPassword.touched">
+          Confirm password is required
+        </mat-error>
+      </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="register()">
-    Register
-  </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="auth-button"
+        (click)="register()"
+      >
+        Register
+      </button>
 
-  <p style="margin-top: 10px;">
-    <a routerLink="/" style="color: blue; text-decoration: underline;">
-      Already have an account? Sign-in
-    </a>
-  </p>
+      <p class="auth-link">
+        <a routerLink="/">
+          Already have an account? Sign in
+        </a>
+      </p>
 
-</form>
+    </form>
+  </div>
+</div>
