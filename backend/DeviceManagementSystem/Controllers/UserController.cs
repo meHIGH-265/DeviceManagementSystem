@@ -38,8 +38,11 @@ namespace DeviceManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Create(User user, [FromServices] EmailValidationService emailValidationService)
         {
+            if (!emailValidationService.ValidateEmail(user.Email))
+                return BadRequest("Invalid email");
+
             var id = await _userRepository.CreateAsync(user);
             user.Id = id;
 
@@ -82,7 +85,11 @@ namespace DeviceManagementSystem.Controllers
             );
 
             if (user == null)
-                return Unauthorized();
+            {
+                if (await _userRepository.GetByEmailAsync(request.Email) != null)
+                    return BadRequest("Wrong password");
+                return BadRequest("Invalid email");
+            }
 
             var token = jwtService.GenerateToken(user);
 

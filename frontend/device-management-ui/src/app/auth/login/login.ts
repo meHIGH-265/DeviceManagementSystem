@@ -55,7 +55,13 @@ export class LoginComponent {
         this.router.navigate(['/devices']);
       },
       error: () => {
-        alert('Invalid email or password');
+        this.auth.getUserByEmail(email).subscribe((exists) => {
+          if (exists) {
+            alert('Wrong password');
+          } else {
+            alert('Invalid email');
+          }
+        });
       }
     });
   }
