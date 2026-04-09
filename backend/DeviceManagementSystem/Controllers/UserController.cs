@@ -92,5 +92,16 @@ namespace DeviceManagementSystem.Controllers
                 user = user
             });
         }
+
+        [HttpGet("by_email/{email}")]
+        public async Task<IActionResult> GetByEmail(string email, [FromServices] JwtService jwtService)
+        {
+            var user = await _userRepository.GetByEmailAsync(email);
+
+            if (user == null)
+                return Ok(false);
+
+            return Ok(true);
+        }
     }
 }

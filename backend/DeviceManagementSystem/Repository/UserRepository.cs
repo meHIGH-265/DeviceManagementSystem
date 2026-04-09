@@ -7,7 +7,7 @@ namespace DeviceManagementSystem.Repository
 {
     public interface IUserRepository : IRepository<User, int>
     {
-        Task<User?> GetByEmailAsync(string email, string? passwordHash);
+        Task<User?> GetByEmailAsync(string email, string? passwordHash = null);
     }
 
     public class UserRepository : IUserRepository
@@ -143,7 +143,7 @@ namespace DeviceManagementSystem.Repository
             return rows > 0;
         }
 
-        public async Task<User?> GetByEmailAsync(string email, string? passwordHash)
+        public async Task<User?> GetByEmailAsync(string email, string? passwordHash = null)
         {
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();

@@ -23,6 +23,10 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(authResult.user));
   }
 
+  getUserByEmail(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/by_email/${email}`);
+  }
+
   register(user: any) {
     return this.http.post(`${this.apiUrl}`, user);
   }

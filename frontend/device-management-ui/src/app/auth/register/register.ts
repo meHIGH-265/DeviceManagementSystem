@@ -58,17 +58,23 @@ export class RegisterComponent {
       return;
     }
 
-    const user = {
-      name: this.form.value.name,
-      email: this.form.value.email,
-      role: this.form.value.role,
-      location: this.form.value.location,
-      passwordHash: password
-    };
+    this.auth.getUserByEmail(this.form.value.email!).subscribe((email_exists) => {
+      if (email_exists) {
+        alert('There already is an account made for this email');
+        return;
+      }
+      const user = {
+        name: this.form.value.name,
+        email: this.form.value.email,
+        role: this.form.value.role,
+        location: this.form.value.location,
+        passwordHash: password
+      };
 
-    this.auth.register(user).subscribe(() => {
-      alert('Account created successfully');
-      this.router.navigate(['/']);
+      this.auth.register(user).subscribe(() => {
+        alert('Account created successfully');
+        this.router.navigate(['/']);
+      });
     });
   }
 }
