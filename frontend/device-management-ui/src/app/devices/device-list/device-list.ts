@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { DeviceService } from '../../services/device.service';
 import { Device } from '../../models/device.model';
@@ -32,7 +33,8 @@ import { AuthService } from '../../services/auth.service';
     MatFormFieldModule,
     RouterModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule
   ],
   templateUrl: './device-list.html',
   styleUrl: './device-list.css'
@@ -61,8 +63,13 @@ export class DeviceListComponent implements OnInit {
     this.loadUsers();
   }
 
+  private searchTimeout: any;
+
   onSearchChange() {
-    this.loadDevices();
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.loadDevices();
+    }, 300);
   }
 
   loadDevices() {
@@ -140,6 +147,14 @@ export class DeviceListComponent implements OnInit {
   getUserName(device: Device): string {
     if (!device.assignedUserId) return 'Unassigned';
     return this.userMap[device.assignedUserId]?.name || 'Loading...';
+  }
+
+  getUserTooltip(device: Device): string {
+    if (!device.assignedUserId)
+      return "assign device to yourself"
+    if (device.assignedUserId === this.currentUser?.id)
+      return "unassign device"
+    return "view user profile"
   }
 
   getCurrentUserName(): string {

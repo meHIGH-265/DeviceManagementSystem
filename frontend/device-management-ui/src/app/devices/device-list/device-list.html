@@ -15,20 +15,39 @@
   <!-- Card -->
   <mat-card class="main-card">
 
-    <!-- Search -->
-    <div class="search-bar">
+    <!-- Top Bar -->
+    <div class="top-bar">
+
+      <!-- Search (LEFT) -->
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search devices</mat-label>
+
         <input
           matInput
           [(ngModel)]="searchQuery"
-          (keyup.enter)="onSearchChange()"
+          (ngModelChange)="onSearchChange()"
           placeholder="Search by name, manufacturer, RAM..."
         />
+
+        <!-- Clear (X) button INSIDE input -->
+        <button
+          *ngIf="searchQuery"
+          matSuffix
+          mat-icon-button
+          type="button"
+          aria-label="Clear"
+          (click)="clearFilter()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+
       </mat-form-field>
-      <button mat-raised-button color="primary" class="clear-filter-button" (click)="clearFilter()">
-        Clear Filter
+
+      <!-- Add Button (RIGHT) -->
+      <button mat-raised-button color="primary" class="add-button" (click)="openCreate()">
+        + Add Device
       </button>
+
     </div>
 
     <!-- Table -->
@@ -48,7 +67,12 @@
         <ng-container matColumnDef="user">
           <th mat-header-cell *matHeaderCellDef>User</th>
           <td mat-cell *matCellDef="let d">
-            <button mat-button (click)="handleUserClick(d)">
+            <button
+              mat-button
+              (click)="handleUserClick(d)"
+              [matTooltip]="getUserTooltip(d)"
+              matTooltipPosition="above"
+            >
               {{ getUserName(d) }}
             </button>
           </td>
@@ -77,13 +101,6 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
       </table>
-    </div>
-
-    <!-- Footer Button -->
-    <div class="card-footer">
-      <button mat-raised-button color="primary" class="wide-button" (click)="openCreate()">
-        Add Device
-      </button>
     </div>
 
   </mat-card>
