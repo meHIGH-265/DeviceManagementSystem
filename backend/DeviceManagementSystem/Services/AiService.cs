@@ -35,6 +35,8 @@ OS: {device.OS}
 OS Version: {device.OSVersion}
 Processor: {device.Processor}
 RAM: {device.RAM}
+
+Do NOT begin the descriotion with 'The {device.Name} is ...'!
 ";
 
             var response = await client.CompleteChatAsync(prompt);

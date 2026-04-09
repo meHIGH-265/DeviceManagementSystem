@@ -85,7 +85,6 @@ namespace DeviceManagementSystem.Controllers
 
         [Authorize]
         [HttpPost("generate-description")]
-        [ActionName("GenerateDescription")]
         public async Task<IActionResult> GenerateDescription([FromBody] Device device, [FromServices] AiService aiService)
         {
             if (device == null)

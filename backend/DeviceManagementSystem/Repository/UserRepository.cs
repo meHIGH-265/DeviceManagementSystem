@@ -45,7 +45,7 @@ namespace DeviceManagementSystem.Repository
                     Role = reader["Role"].ToString()!,
                     Location = reader["Location"].ToString()!,
                     Email = reader["Email"].ToString()!,
-                    PasswordHash = null// reader["PasswordHash"].ToString()!
+                    PasswordHash = null
                 });
             }
 
@@ -73,7 +73,7 @@ namespace DeviceManagementSystem.Repository
                     Role = reader["Role"].ToString()!,
                     Location = reader["Location"].ToString()!,
                     Email = reader["Email"].ToString()!,
-                    PasswordHash = null// reader["PasswordHash"].ToString()!
+                    PasswordHash = null
                 };
             }
 
@@ -169,7 +169,7 @@ namespace DeviceManagementSystem.Repository
                     Role = reader["Role"].ToString()!,
                     Location = reader["Location"].ToString()!,
                     Email = reader["Email"].ToString()!,
-                    PasswordHash = null// reader["PasswordHash"].ToString()!
+                    PasswordHash = null
                 };
             }
 
