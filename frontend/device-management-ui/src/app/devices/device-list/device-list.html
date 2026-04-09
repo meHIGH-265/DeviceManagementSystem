@@ -1,62 +1,87 @@
-<mat-form-field appearance="outline" style="width: 300px; margin-bottom: 10px;">
-  <mat-label>Search devices</mat-label>
-  <input
-    matInput
-    [(ngModel)]="searchQuery"
-    (keyup.enter)="onSearchChange()"
-    placeholder="Search by name, manufacturer, RAM..."
-  />
-</mat-form-field>
+<!-- Header -->
+<header class="app-header">
+  <div class="app-title">
+    Logged in as: {{ getCurrentUserName() }}
+  </div>
 
-<button mat-raised-button color="primary" (click)="openCreate()">
-  Add Device
-</button>
+  <button mat-raised-button color="primary" (click)="logout()">
+    LogOut
+  </button>
+</header>
 
-<button mat-raised-button color="primary" (click)="logout()">
-  LogOut
-</button>
+<!-- Main Content -->
+<div class="container">
 
-<table mat-table [dataSource]="devices">
+  <!-- Card -->
+  <mat-card class="main-card">
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let d">{{ d.name }}</td>
-  </ng-container>
+    <!-- Search -->
+    <div class="search-bar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search devices</mat-label>
+        <input
+          matInput
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearchChange()"
+          placeholder="Search by name, manufacturer, RAM..."
+        />
+      </mat-form-field>
+    </div>
 
-  <ng-container matColumnDef="manufacturer">
-    <th mat-header-cell *matHeaderCellDef>Manufacturer</th>
-    <td mat-cell *matCellDef="let d">{{ d.manufacturer }}</td>
-  </ng-container>
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="devices" class="mat-elevation-z2">
 
-  <ng-container matColumnDef="user">
-    <th mat-header-cell *matHeaderCellDef>User</th>
-    <td mat-cell *matCellDef="let d">
-      <button mat-button (click)="handleUserClick(d)">
-        {{ getUserName(d) }}
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let d">{{ d.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="manufacturer">
+          <th mat-header-cell *matHeaderCellDef>Manufacturer</th>
+          <td mat-cell *matCellDef="let d">{{ d.manufacturer }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef>User</th>
+          <td mat-cell *matCellDef="let d">
+            <button mat-button (click)="handleUserClick(d)">
+              {{ getUserName(d) }}
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let d">
+
+            <button mat-icon-button (click)="openView(d)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+
+            <button mat-icon-button color="primary" (click)="openEdit(d)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="delete(d)">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    </div>
+
+    <!-- Footer Button -->
+    <div class="card-footer">
+      <button mat-raised-button color="primary" (click)="openCreate()">
+        Add Device
       </button>
-    </td>
-  </ng-container>
+    </div>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
-    <td mat-cell *matCellDef="let d">
-
-      <button mat-icon-button (click)="openView(d)">
-        <mat-icon>visibility</mat-icon>
-      </button>
-
-      <button mat-icon-button color="primary" (click)="openEdit(d)">
-        <mat-icon>edit</mat-icon>
-      </button>
-
-      <button mat-icon-button color="warn" (click)="delete(d)">
-        <mat-icon>delete</mat-icon>
-      </button>
-
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-</table>
+  </mat-card>
+</div>

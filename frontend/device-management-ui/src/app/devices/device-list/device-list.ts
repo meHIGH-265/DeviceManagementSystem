@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 
 import { DeviceService } from '../../services/device.service';
@@ -30,9 +31,11 @@ import { AuthService } from '../../services/auth.service';
     FormsModule,
     MatFormFieldModule,
     RouterModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule
   ],
-  templateUrl: './device-list.html'
+  templateUrl: './device-list.html',
+  styleUrl: './device-list.css'
 })
 export class DeviceListComponent implements OnInit {
 
@@ -129,6 +132,10 @@ export class DeviceListComponent implements OnInit {
   getUserName(device: Device): string {
     if (!device.assignedUserId) return 'Unassigned';
     return this.userMap[device.assignedUserId]?.name || 'Loading...';
+  }
+
+  getCurrentUserName(): string {
+    return this.currentUser!.name;
   }
 
   assignDevice(device: Device) {
