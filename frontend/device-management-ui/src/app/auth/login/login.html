@@ -1,8 +1,8 @@
-<div class="login-container">
-  <div class="login-card">
-    <h2 class="login-title">Login</h2>
+<div class="auth-container">
+  <div class="auth-card">
+    <h2 class="auth-title">Login</h2>
 
-    <form [formGroup]="form" class="login-form">
+    <form [formGroup]="form" class="auth-form">
       <mat-form-field appearance="fill" class="full-width">
         <input matInput placeholder="Email" formControlName="email" />
         <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
@@ -25,13 +25,13 @@
       <button
         mat-raised-button
         color="primary"
-        class="login-button"
+        class="auth-button"
         (click)="login()"
       >
         Login
       </button>
 
-      <p class="register-link">
+      <p class="auth-link">
         <a routerLink="/register">
           Don't have an account? Sign up
         </a>

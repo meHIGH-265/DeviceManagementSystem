@@ -26,6 +26,7 @@ import { AuthResponse } from '../../models/auth-response.model';
 export class LoginComponent {
 
   form;
+  hidePassword = true;
 
   constructor(
     private fb: FormBuilder,
