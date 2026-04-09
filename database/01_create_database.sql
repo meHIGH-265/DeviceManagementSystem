@@ -1,18 +1,3 @@
--- Delete database
-/*
-USE master;
-GO
-IF EXISTS (SELECT * FROM sys.databases WHERE name = 'DeviceManagementDB')
-BEGIN
-    DROP DATABASE DeviceManagementDB;
-END
-GO
-*/
-
--- The following checks for existance of database and tables are redundant since I deleted it previously,
--- but I am not yet sure of the best practice to make this script idempotent,
--- so I want to make sure I cover all expectations
-
 -- Create database if it doesn't exist
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DeviceManagementDB')
 BEGIN
