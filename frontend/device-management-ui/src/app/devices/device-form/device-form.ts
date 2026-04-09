@@ -83,7 +83,7 @@ export class DeviceFormComponent {
       });
     }
 
-    if (this.form.invalid) {
+    if (!this.canGenerateAi()) {
       this.form.markAllAsTouched();
       return;
     }
