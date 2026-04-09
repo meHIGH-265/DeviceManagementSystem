@@ -26,6 +26,9 @@
           placeholder="Search by name, manufacturer, RAM..."
         />
       </mat-form-field>
+      <button mat-raised-button color="primary" class="clear-filter-button" (click)="clearFilter()">
+        Clear Filter
+      </button>
     </div>
 
     <!-- Table -->
@@ -78,7 +81,7 @@
 
     <!-- Footer Button -->
     <div class="card-footer">
-      <button mat-raised-button color="primary" (click)="openCreate()">
+      <button mat-raised-button color="primary" class="wide-button" (click)="openCreate()">
         Add Device
       </button>
     </div>

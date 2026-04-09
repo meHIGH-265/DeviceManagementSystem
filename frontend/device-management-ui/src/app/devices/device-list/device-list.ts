@@ -83,6 +83,11 @@ export class DeviceListComponent implements OnInit {
     }
   }
 
+  clearFilter() {
+    this.searchQuery = "";
+    this.loadDevices();
+  }
+
   loadUsers() {
     this.userService.getAll().subscribe(users => {
       users.forEach(u => this.userMap[u.id] = u);
@@ -117,7 +122,10 @@ export class DeviceListComponent implements OnInit {
 
   delete(device: Device) {
     const ref = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Delete this device?' }
+      data: {
+        message: 'Delete this device?',
+        action: 'delete'
+      }
     });
 
     ref.afterClosed().subscribe(result => {
@@ -148,7 +156,10 @@ export class DeviceListComponent implements OnInit {
 
   openAssignDialog(device: Device) {
     const ref = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Assign this device to yourself?' }
+      data: {
+        message: 'Assign this device to yourself?',
+        action: 'assign'
+      }
     });
 
     ref.afterClosed().subscribe(result => {
@@ -166,7 +177,10 @@ export class DeviceListComponent implements OnInit {
 
   openUnassignDialog(device: Device) {
     const ref = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Unassign this device?' }
+      data: {
+        message: 'Unassign this device?',
+        action: 'unassign'
+      }
     });
 
     ref.afterClosed().subscribe(result => {
