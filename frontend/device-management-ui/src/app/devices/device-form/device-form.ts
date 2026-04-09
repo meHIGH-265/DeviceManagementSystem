@@ -20,7 +20,8 @@ import { Device } from '../../models/device.model';
     MatInputModule,
     MatButtonModule
   ],
-  templateUrl: './device-form.html'
+  templateUrl: './device-form.html',
+  styleUrl: './device-form.css'
 })
 export class DeviceFormComponent {
 

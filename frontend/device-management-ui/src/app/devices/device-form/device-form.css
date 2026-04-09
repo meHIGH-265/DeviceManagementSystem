@@ -1,0 +1,88 @@
+.dialog-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.dialog-content {
+  padding-top: 8px;
+}
+
+.form-error {
+  color: #d32f2f;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Each row: label + field */
+.form-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: start;
+  gap: 12px;
+}
+
+/* Labels */
+.field-label {
+  font-weight: 500;
+  padding-top: 14px;
+}
+
+/* Required indicator */
+.required {
+  color: #d32f2f;
+  margin-left: 4px;
+}
+
+/* Controls */
+.field-control {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* AI button styling */
+.ai-button {
+  font-size: 12px;
+  margin-right: 4px;
+  opacity: 0.85;
+}
+
+.ai-button:hover {
+  opacity: 1;
+}
+
+.label-with-action {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Make description a bit taller visually */
+.description-control mat-form-field textarea {
+  min-height: 90px;
+}
+
+/* Actions spacing */
+.dialog-actions {
+  margin-top: 12px;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .field-label {
+    padding-top: 0;
+  }
+}
