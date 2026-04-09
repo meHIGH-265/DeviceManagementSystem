@@ -8,11 +8,24 @@
   color: white;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   max-height: 15vh;
+  gap: 16px;
 }
 
 .app-title {
+  flex: 14;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.user-name {
+  flex: 5;
   font-size: 16px;
   font-weight: 500;
+  text-align: right;
+}
+
+.log-out-button {
+  flex: 1;
 }
 
 /* Container */
