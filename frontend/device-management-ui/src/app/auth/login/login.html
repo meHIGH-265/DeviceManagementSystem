@@ -1,25 +1,41 @@
-<h2>Login</h2>
+<div class="login-container">
+  <div class="login-card">
+    <h2 class="login-title">Login</h2>
 
-<form [formGroup]="form">
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="Email" formControlName="email">
-    <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
-      Email is required
-    </mat-error>
-  </mat-form-field>
+    <form [formGroup]="form" class="login-form">
+      <mat-form-field appearance="fill" class="full-width">
+        <input matInput placeholder="Email" formControlName="email" />
+        <mat-error *ngIf="form.controls.email.invalid && form.controls.email.touched">
+          Email is required
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <input matInput type="password" placeholder="Password" formControlName="password">
-    <mat-error *ngIf="form.controls.password.invalid && form.controls.password.touched">
-      Password is required
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="form.controls.password.invalid && form.controls.password.touched">
+          Password is required
+        </mat-error>
+      </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="login()">Login</button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="login-button"
+        (click)="login()"
+      >
+        Login
+      </button>
 
-  <p>
-    <a routerLink="/register" style="color: blue; text-decoration: underline;">
-      Don't have an account? Sign-up
-    </a>
-  </p>
-</form>
+      <p class="register-link">
+        <a routerLink="/register">
+          Don't have an account? Sign up
+        </a>
+      </p>
+    </form>
+  </div>
+</div>

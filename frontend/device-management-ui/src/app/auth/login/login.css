@@ -1,0 +1,59 @@
+/* Center the whole page */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f7fa;
+}
+
+/* Card-like container */
+.login-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Title styling */
+.login-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+/* Form layout */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Full width fields */
+.full-width {
+  width: 100%;
+}
+
+/* Button styling */
+.login-button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Register link */
+.register-link {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.register-link a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

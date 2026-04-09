@@ -20,7 +20,8 @@ import { AuthResponse } from '../../models/auth-response.model';
     MatInputModule,
     MatButtonModule
   ],
-  templateUrl: './login.html'
+  templateUrl: './login.html',
+  styleUrl: './login.css'
 })
 export class LoginComponent {
 
