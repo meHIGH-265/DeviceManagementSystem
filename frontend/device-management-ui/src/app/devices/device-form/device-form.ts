@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -34,6 +34,7 @@ export class DeviceFormComponent {
     private fb: FormBuilder,
     private deviceService: DeviceService,
     private dialogRef: MatDialogRef<DeviceFormComponent>,
+    private cdr: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.mode = data.mode;
@@ -77,16 +78,15 @@ export class DeviceFormComponent {
   }
 
   generateAiDescription() {
-    if (this.form.get('description') == null) {
-      this.form.patchValue({
-        description: 'generating ai description...'
-      });
-    }
-
     if (!this.canGenerateAi()) {
       this.form.markAllAsTouched();
       return;
     }
+
+    this.form.patchValue({
+      description: 'generating ai description...'
+    });
+    this.cdr.detectChanges();
 
     const device = this.form.getRawValue();
 
