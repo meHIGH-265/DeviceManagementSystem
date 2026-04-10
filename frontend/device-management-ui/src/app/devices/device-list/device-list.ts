@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,7 +35,8 @@ import { AuthService } from '../../services/auth.service';
     RouterModule,
     MatInputModule,
     MatCardModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMenuModule
   ],
   templateUrl: './device-list.html',
   styleUrl: './device-list.css'
@@ -208,6 +210,10 @@ export class DeviceListComponent implements OnInit {
       width: '400px',
       data: user
     });
+  }
+
+  openProfile() {
+    this.openUserViewDialog(this.currentUser);
   }
 
   handleUserClick(device: Device) {
