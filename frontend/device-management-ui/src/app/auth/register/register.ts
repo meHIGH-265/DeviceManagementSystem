@@ -71,9 +71,14 @@ export class RegisterComponent {
         passwordHash: password
       };
 
-      this.auth.register(user).subscribe(() => {
-        alert('Account created successfully');
-        this.router.navigate(['/']);
+      this.auth.register(user).subscribe({
+        next: () => {
+          alert('Account created successfully');
+          this.router.navigate(['/']);
+        },
+        error: () => {
+          alert('Invalid email address. Please use the format: name@example.com');
+        }
       });
     });
   }
