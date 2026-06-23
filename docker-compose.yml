@@ -1,0 +1,48 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: device-management-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data:/var/opt/mssql
+    restart: unless-stopped
+
+  db-init:
+    image: mcr.microsoft.com/mssql-tools:latest
+    container_name: device-management-db-init
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 1433
+      DB_NAME: DeviceManagementDB
+      SA_PASSWORD: ${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}
+      SEED_SAMPLE_DATA: "true"
+    volumes:
+      - ./database:/scripts:ro
+    entrypoint: ["/bin/sh", "/scripts/init-db.sh"]
+    restart: "no"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: device-management-backend
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=DeviceManagementDB;User Id=sa;Password=-YourStrong!Passw0rd;TrustServerCertificate=True;Encrypt=False"
+    ports:
+      - "5095:8080"
+    restart: unless-stopped
+
+volumes:
+  db_data:
