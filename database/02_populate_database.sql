@@ -15,8 +15,8 @@ INSERT INTO Users (Name, Role, Location, Email, PasswordHash)
 VALUES
 ('Alice Johnson', 'Admin', 'Cluj', 'alice@example.com', 'hashed_password_1'),
 ('Bob Smith', 'Employee', 'Bucharest', 'bob@example.com', 'hashed_password_2'),
-('Charlie Brown', 'Employee', 'Berlin', 'charlie@example.com', 'hashed_password_3'),
-('Mihai Secosan', 'Junior', 'Cluj-Napoca', 'secosanmihaisebastian@gmail.com', 'pass1234');
+('Charlie Brown', 'Employee', 'Berlin', 'charlie@example.com', 'hashed_password_3');
+--('Mihai Secosan', 'Junior', 'Cluj-Napoca', 'secosanmihaisebastian@gmail.com', 'pass1234');
 
 -- Insert Devices
 INSERT INTO Devices (Name, Manufacturer, Type, OS, OSVersion, Processor, RAM, Description, AssignedUserId)

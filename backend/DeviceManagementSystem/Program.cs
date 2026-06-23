@@ -84,8 +84,6 @@ namespace DeviceManagementSystem
                 app.MapOpenApi();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
 
