@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/meHIGH-265/DeviceManagementSystem
     targetRevision: main
-    path: Infrastructure\Argocd_oci
+    path: Infrastructure/Argocd_oci
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
