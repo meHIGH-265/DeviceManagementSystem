@@ -5,7 +5,7 @@ metadata:
     app: my-first-deployment
   name: my-first-deployment
 spec:
-  replicas: 5
+  replicas: 15
   selector:
     matchLabels:
       app: my-first-deployment
