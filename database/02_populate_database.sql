@@ -15,15 +15,15 @@ INSERT INTO Users (Name, Role, Location, Email, PasswordHash)
 VALUES
 ('Alice Johnson', 'Admin', 'Cluj', 'alice@example.com', 'hashed_password_1'),
 ('Bob Smith', 'Employee', 'Bucharest', 'bob@example.com', 'hashed_password_2'),
-('Charlie Brown', 'Employee', 'Berlin', 'charlie@example.com', 'hashed_password_3');
---('Mihai Secosan', 'Junior', 'Cluj-Napoca', 'secosanmihaisebastian@gmail.com', 'pass1234');
+('Charlie Brown', 'Employee', 'Berlin', 'charlie@example.com', 'hashed_password_3'),
+('Mihai Secosan', 'Junior', 'Cluj-Napoca', 'secosanmihaisebastian@gmail.com', 'pass1234');
 
 -- Insert Devices
 INSERT INTO Devices (Name, Manufacturer, Type, OS, OSVersion, Processor, RAM, Description, AssignedUserId)
 VALUES
-('iPhone 15 Pro', 'Apple', 'Phone', 'iOS', '17', 'A17 Pro', '8GB', 'Apple flagship smartphone', 1),
-('Galaxy S23', 'Samsung', 'Phone', 'Android', '14', 'Snapdragon 8 Gen 2', '8GB', 'High-end Android device', 2),
-('iPad Air', 'Apple', 'Tablet', 'iPadOS', '16', 'M1', '8GB', 'Lightweight tablet', 3),
+('iPhone 15 Pro', 'Apple', 'Phone', 'iOS', '17', 'A17 Pro', '8GB', 'Apple flagship smartphone', NULL),
+('Galaxy S23', 'Samsung', 'Phone', 'Android', '14', 'Snapdragon 8 Gen 2', '8GB', 'High-end Android device', NULL),
+('iPad Air', 'Apple', 'Tablet', 'iPadOS', '16', 'M1', '8GB', 'Lightweight tablet', NULL),
 ('Surface Pro 9', 'Microsoft', 'Tablet', 'Windows', '11', 'Intel i7', '16GB', '2-in-1 business device', NULL),
 ('Pixel 8', 'Google', 'Phone', 'Android', '14', 'Google Tensor G3', '8GB', 'Google flagship phone', NULL),
 ('OnePlus 11', 'OnePlus', 'Phone', 'Android', '13', 'Snapdragon 8 Gen 2', '16GB', 'Performance-focused phone', NULL),

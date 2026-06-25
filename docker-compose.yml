@@ -5,7 +5,7 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Developer"
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}
+      MSSQL_SA_PASSWORD: YourStrongPassword123
     ports:
       - "1433:1433"
     volumes:
@@ -21,7 +21,7 @@ services:
       DB_HOST: db
       DB_PORT: 1433
       DB_NAME: DeviceManagementDB
-      SA_PASSWORD: ${MSSQL_SA_PASSWORD:-YourStrong!Passw0rd}
+      SA_PASSWORD: YourStrongPassword123
       SEED_SAMPLE_DATA: "true"
     volumes:
       - ./database:/scripts:ro
@@ -39,9 +39,22 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
-      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=DeviceManagementDB;User Id=sa;Password=-YourStrong!Passw0rd;TrustServerCertificate=True;Encrypt=False"
+      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=DeviceManagementDB;User Id=sa;Password=YourStrongPassword123;TrustServerCertificate=True;Encrypt=False"
     ports:
       - "5095:8080"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend/device-management-ui
+      dockerfile: Dockerfile
+    container_name: device-management-frontend
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: development
+    ports:
+      - "4200:4200"
     restart: unless-stopped
 
 volumes:
