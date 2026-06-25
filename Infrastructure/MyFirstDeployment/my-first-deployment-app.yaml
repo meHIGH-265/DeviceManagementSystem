@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-first-app
+  namespace: argocd
+spec:
+  project: device-management-system
+  source:
+    repoURL: https://github.com/meHIGH-265/DeviceManagementSystem
+    targetRevision: main
+    path: Infrastructure/MyFirstDeployment
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: my-first-namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

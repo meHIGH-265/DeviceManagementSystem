@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-first-deployment
+  name: my-first-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: my-first-deployment
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: my-first-deployment
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
