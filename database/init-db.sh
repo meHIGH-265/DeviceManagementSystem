@@ -37,7 +37,7 @@ if [ "${SEED_SAMPLE_DATA}" = "true" ]; then
 
   if [ "${USER_COUNT}" = "0" ]; then
     echo "Seeding sample data..."
-    "${SQLCMD}" -S "${DB_HOST},${DB_PORT}" -U sa -P "${SA_PASSWORD}" -C -b -i /scripts/02_populate_database.sql
+    "${SQLCMD}" -S "${DB_HOST},${DB_PORT}" -U sa -P "${SA_PASSWORD}" -C -b -i /scripts/03_populate_database.sql
   else
     echo "Skipping seed because Users already contains data."
   fi

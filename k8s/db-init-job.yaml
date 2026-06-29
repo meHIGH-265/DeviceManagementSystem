@@ -1,0 +1,61 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-init
+  namespace: device-management
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+
+      volumes:
+      - name: scripts
+        configMap:
+          name: db-init-scripts
+
+      containers:
+      - name: db-init
+        image: mcr.microsoft.com/mssql-tools
+
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+
+        env:
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mssql-secret
+              key: SA_PASSWORD
+
+        command: ["/bin/bash", "-c"]
+        args:
+          - |
+            echo "Waiting for SQL Server..."
+
+            for i in {1..30}; do
+              /opt/mssql-tools/bin/sqlcmd \
+                -S mssql -U sa -P "$SA_PASSWORD" \
+                -Q "SELECT 1" && break
+              sleep 2
+            done
+
+            echo "Creating database..."
+            /opt/mssql-tools/bin/sqlcmd \
+              -S mssql -U sa -P "$SA_PASSWORD" \
+              -d master -i /scripts/01_create_database.sql
+
+            echo "Creating tables..."
+            /opt/mssql-tools/bin/sqlcmd \
+              -S mssql -U sa -P "$SA_PASSWORD" \
+              -d DeviceManagementDB \
+              -i /scripts/02_create_tables.sql
+
+            echo "Seeding data..."
+            /opt/mssql-tools/bin/sqlcmd \
+              -S mssql -U sa -P "$SA_PASSWORD" \
+              -d DeviceManagementDB \
+              -i /scripts/03_populate_database.sql
+
+            echo "DONE"

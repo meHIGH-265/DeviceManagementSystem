@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql
+  namespace: device-management
+spec:
+  selector:
+    app: mssql
+
+  ports:
+  - port: 1433
+    targetPort: 1433
+
+  type: ClusterIP
