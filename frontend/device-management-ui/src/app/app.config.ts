@@ -34,6 +34,7 @@ function loadAppConfig(
     );
 
     configService.setConfig(config);
+    configService.setSecrets(secrets);
   };
 }
 
