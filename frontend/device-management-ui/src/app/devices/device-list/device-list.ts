@@ -20,6 +20,7 @@ import { UserDialogComponent } from '../../user/user-dialog/user-dialog';
 import { DeviceFormComponent } from '../device-form/device-form';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog';
 import { AuthService } from '../../services/auth.service';
+import { RuntimeConfigService } from '../../services/runtime-config.service';
 
 @Component({
   selector: 'app-device-list',
@@ -55,7 +56,8 @@ export class DeviceListComponent implements OnInit {
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private config: RuntimeConfigService
   ) {
     this.currentUser = this.auth.getUser();
   }
@@ -239,6 +241,6 @@ export class DeviceListComponent implements OnInit {
   }
 
   getApplicationName(): string {
-    return 'Device Management System';
+    return this.config.aplicationName;
   }
 }

@@ -18,7 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { APP_INITIALIZER } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { RuntimeConfigService, AppConfig } from './services/runtime-config.service';
+import { RuntimeConfigService, AppConfig, AppSecrets } from './services/runtime-config.service';
 
 function loadAppConfig(
   http: HttpClient,
@@ -27,6 +27,10 @@ function loadAppConfig(
   return async () => {
     const config = await firstValueFrom(
       http.get<AppConfig>('/assets/config/config.json')
+    );
+
+    const secrets = await firstValueFrom(
+      http.get<AppSecrets>('/assets/secrets/app-name.json')
     );
 
     configService.setConfig(config);

@@ -24,8 +24,16 @@ spec:
           - name: frontend-config
             mountPath: /app/src/assets/config/config.json
             subPath: config.json
+          
+          - name: frontend-secret
+            mountPath: /app/src/assets/secrets/app-name.json
+            subPath: app-name.json
 
       volumes:
         - name: frontend-config
           configMap:
             name: frontend-config
+
+        - name: frontend-secret
+          secret:
+            secretName: frontend-secret
