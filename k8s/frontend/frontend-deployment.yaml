@@ -22,7 +22,7 @@ spec:
 
         volumeMounts:
           - name: frontend-config
-            mountPath: /usr/share/nginx/html/assets/config/config.json
+            mountPath: /app/src/assets/config/config.json
             subPath: config.json
 
       volumes:
