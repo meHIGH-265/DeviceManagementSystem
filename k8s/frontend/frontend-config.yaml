@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: device-management
+data:
+  config.json: |
+    {
+      "apiUrl": "http://localhost:8080/api"
+    }

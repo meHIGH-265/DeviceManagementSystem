@@ -3,17 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../models/auth-response.model';
-import { environment } from './environments/environment';
+import { RuntimeConfigService } from './runtime-config.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private apiUrl = `${environment.apiUrl}/user`;
+  private domain = 'user';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private config: RuntimeConfigService
+  ) {}
+
+  getApiUrl(): string {
+    return `${this.config.apiUrl}/${this.domain}`;
+  }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, {
+    return this.http.post<AuthResponse>(`${this.getApiUrl()}/login`, {
       email: email,
       passwordHash: password
     });
@@ -25,11 +32,11 @@ export class AuthService {
   }
 
   getUserByEmail(email: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/by_email/${email}`);
+    return this.http.get<boolean>(`${this.getApiUrl()}/by_email/${email}`);
   }
 
   register(user: any) {
-    return this.http.post(`${this.apiUrl}`, user);
+    return this.http.post(this.getApiUrl(), user);
   }
 
   setUser(user: User) {

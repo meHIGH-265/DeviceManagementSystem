@@ -19,3 +19,13 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 4200
+
+        volumeMounts:
+          - name: frontend-config
+            mountPath: /usr/share/nginx/html/assets/config/config.json
+            subPath: config.json
+
+      volumes:
+        - name: frontend-config
+          configMap:
+            name: frontend-config

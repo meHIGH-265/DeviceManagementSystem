@@ -15,18 +15,41 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { APP_INITIALIZER } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { RuntimeConfigService, AppConfig } from './services/runtime-config.service';
+
+function loadAppConfig(
+  http: HttpClient,
+  configService: RuntimeConfigService
+) {
+  return async () => {
+    const config = await firstValueFrom(
+      http.get<AppConfig>('/assets/config/config.json')
+    );
+
+    configService.setConfig(config);
+  };
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(),
-
     provideHttpClient(withInterceptorsFromDi()),
 
     // 👇 Register your interceptor globally
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadAppConfig,
+      deps: [HttpClient, RuntimeConfigService],
       multi: true
     },
 

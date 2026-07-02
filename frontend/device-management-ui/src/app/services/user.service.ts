@@ -2,35 +2,42 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
-import { environment } from './environments/environment';
+import { RuntimeConfigService } from './runtime-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   
-  private apiUrl = `${environment.apiUrl}/user`;
+  private domain = 'user';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private config: RuntimeConfigService
+  ) {}
+
+  getApiUrl(): string {
+    return `${this.config.apiUrl}/${this.domain}`;
+  }
 
   getAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    return this.http.get<User[]>(this.getApiUrl());
   }
 
   getById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+    return this.http.get<User>(`${this.getApiUrl()}/${id}`);
   }
 
   create(user: User) {
     console.info(user)
-    return this.http.post(this.apiUrl, user);
+    return this.http.post(this.getApiUrl(), user);
   }
 
   update(user: User) {
-    return this.http.put(`${this.apiUrl}/${user.id}`, user);
+    return this.http.put(`${this.getApiUrl()}/${user.id}`, user);
   }
 
   delete(id: number) {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.getApiUrl()}/${id}`);
   }
 }
