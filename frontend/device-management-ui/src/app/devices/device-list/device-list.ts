@@ -237,4 +237,8 @@ export class DeviceListComponent implements OnInit {
     this.router.navigate(['']);
     this.auth.setSession({token: '', user: {id: 0, name: '', email: '', role: '', location: ''}});
   }
+
+  getApplicationName(): string {
+    return 'Device Management System';
+  }
 }
